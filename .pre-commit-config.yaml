@@ -30,6 +30,7 @@ repos:
     - id: mypy
       additional_dependencies:
         - 'types-PyYAML'
+      exclude: ^tests/
 
 -   repo: https://github.com/asottile/pyupgrade
     rev: v3.21.2

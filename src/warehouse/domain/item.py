@@ -11,10 +11,16 @@ class Item:
     height: float
     length: float
 
+    @property
+    def volume(self) -> float:
+        return self.width * self.height * self.length
+
 
 class ItemFactory:
     @staticmethod
-    def create(name: str, weight: float, width: float, height: float, length: float) -> Item:
+    def create(
+        name: str, weight: float, width: float, height: float, length: float
+    ) -> Item:
         item_id = str(uuid.uuid4())
 
         # Тут можно сделать проверки, но лень

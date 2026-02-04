@@ -12,15 +12,6 @@ class Shelf:
         self.area = area
         self.items: List[Item] = []
 
-    def add_item(self, item: Item) -> None:
-        """
-        Добавляет предмет на полку с проверкой на возможность размещения
-
-        Вызывает исключение, если предмет не проходит по каким-то параметрам.
-        """
-        # TODO: Реализовать проверки
-        self.items.append(item)
-
 
 class Rack:
     def __init__(self, rack_id: RackId, shelves: List[Shelf]):
@@ -44,12 +35,18 @@ class RackAggregate:
         agg.events.append(RackCreated(rack_id, datetime.now()))
         return agg
 
+    @property
+    def shelves(self) -> List[Shelf]:
+        return list(self._root.shelves.values())
+
     def get_shelf(self, shelf_id: ShelfId) -> Shelf:
         try:
             return self._root.shelves[shelf_id.value]
         except ValueError:
-            raise ValueError(f"Shelf {shelf_id} does not exist in this rack ${self._root.id}")
+            raise ValueError(
+                f"Shelf {shelf_id} does not exist in this rack ${self._root.id}"
+            )
 
     def store_item_on_shelf(self, item: Item, shelf_id: ShelfId) -> None:
         shelf = self.get_shelf(shelf_id)
-        shelf.add_item(item)
+        shelf.items.append(item)

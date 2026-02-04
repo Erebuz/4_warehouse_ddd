@@ -13,7 +13,14 @@ from src.warehouse.domain.value_objects import RackId, ShelfId, StoringStatus
 
 
 class Storing:
-    def __init__(self, storing_id: str, item: Item, rack_id: RackId | None = None, shelf_id: ShelfId | None = None, status: StoringStatus = StoringStatus.CREATED):
+    def __init__(
+        self,
+        storing_id: str,
+        item: Item,
+        rack_id: RackId | None = None,
+        shelf_id: ShelfId | None = None,
+        status: StoringStatus = StoringStatus.CREATED,
+    ):
         self.id = storing_id
         self.item = item
         self.rack_id = rack_id
@@ -52,7 +59,9 @@ class StoringAggregate:
         self._root.rack_id = rack_id
         self._root.shelf_id = shelf_id
         self._root.status = StoringStatus.ACCEPTED
-        self.events.append(StorageAccepted(self._root.id, shelf_id.value, datetime.now()))
+        self.events.append(
+            StorageAccepted(self._root.id, shelf_id.value, datetime.now())
+        )
 
     def pick_up(self) -> None:
         if self._root.status != StoringStatus.ACCEPTED:

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from types import TracebackType
+
 from src.warehouse.application.unit_of_work import UnitOfWork
 from src.warehouse.infrastructure.repositories import InMemoryStoragesRepository
 
@@ -11,10 +13,15 @@ class InMemoryUnitOfWork(UnitOfWork):
         self.storages = InMemoryStoragesRepository()
         self.committed = False
 
-    def __enter__(self):
+    def __enter__(self) -> InMemoryUnitOfWork:
         return self
 
-    def __exit__(self, exc_type, exc, tb):
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc: BaseException | None,
+        tb: TracebackType | None,
+    ) -> None:
         if exc_type:
             self.rollback()
 

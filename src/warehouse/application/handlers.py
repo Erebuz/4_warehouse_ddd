@@ -12,13 +12,18 @@ class CreateStoringHandler:
         self.allocator = allocator
 
     def __call__(self, cmd: CreateItemStoring, racks: list[RackAggregate]) -> str:
-        item = ItemFactory.create(cmd.name, cmd.weight, cmd.width, cmd.height, cmd.length)
+        item = ItemFactory.create(
+            cmd.name, cmd.weight, cmd.width, cmd.height, cmd.length
+        )
         storing = StoringFactory.create(item)
 
         storing_agg = StoringAggregate(storing)
 
-        rack_id, shelf_id = self.allocator.allocate(storing, racks)
-        storing_agg.assign_shelf(rack_id, shelf_id)
+        ids = self.allocator.allocate(storing, racks)
+        if ids is None:
+            raise ValueError("No suitable rack and shelf found")
+
+        storing_agg.assign_shelf(*ids)
 
         with self.uow:
             self.uow.storages.add(storing_agg.root)
