@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Dict, List
+from typing import Any, List
 
 from src.warehouse.domain.events import RackCreated
 from src.warehouse.domain.item import Item
@@ -23,9 +23,9 @@ class Shelf:
 
 
 class Rack:
-    def __init__(self, rack_id: RackId, shelves: Dict[int, Shelf]):
+    def __init__(self, rack_id: RackId, shelves: List[Shelf]):
         self.id = rack_id
-        self.shelves = shelves
+        self.shelves = {s.id.value: s for s in shelves}
 
 
 class RackAggregate:
@@ -39,7 +39,7 @@ class RackAggregate:
 
     @classmethod
     def create(cls, rack_id: str, shelves: List[Shelf]) -> "RackAggregate":
-        root = Rack(rack_id=RackId(value=rack_id), shelves={s.id.value: s for s in shelves})
+        root = Rack(rack_id=RackId(value=rack_id), shelves=shelves)
         agg = cls(root)
         agg.events.append(RackCreated(rack_id, datetime.now()))
         return agg

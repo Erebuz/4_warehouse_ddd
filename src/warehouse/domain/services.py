@@ -13,4 +13,5 @@ class ShelfAllocationService:
 
         # TODO: Реализовать логику поиска подходящей полки
 
-        raise NotImplementedError
+        rack = racks[0]
+        return rack.root.id, rack.root.shelves[1].id

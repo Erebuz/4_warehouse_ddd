@@ -18,7 +18,6 @@ class StorageAccepted:
 @dataclass(frozen=True)
 class StorageCompleted:
     item_id: str
-    shelf_id: int
     occurred_at: datetime
 
 

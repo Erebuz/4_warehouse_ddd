@@ -2,14 +2,13 @@ from __future__ import annotations
 
 from typing import Protocol
 
-from booking.domain.repository import ReservationRepository
+from src.warehouse.domain.repository import StoragesRepository
 
 
-# Unit of Work Port (выходной порт)
 class UnitOfWork(Protocol):
-    reservations: ReservationRepository
+    storages: StoragesRepository
 
-    def __enter__(self) -> "UnitOfWork": ...
+    def __enter__(self) -> UnitOfWork: ...
     def __exit__(self, exc_type, exc, tb) -> None: ...
 
     def commit(self) -> None: ...

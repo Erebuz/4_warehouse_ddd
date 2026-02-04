@@ -1,14 +1,14 @@
 from __future__ import annotations
 
 from src.warehouse.application.unit_of_work import UnitOfWork
-from src.warehouse.infrastructure.repositories import InMemoryReservationRepository
+from src.warehouse.infrastructure.repositories import InMemoryStoragesRepository
 
 
 class InMemoryUnitOfWork(UnitOfWork):
     """UoW для тестов/демо без БД."""
 
     def __init__(self) -> None:
-        self.reservations = InMemoryReservationRepository()
+        self.storages = InMemoryStoragesRepository()
         self.committed = False
 
     def __enter__(self):

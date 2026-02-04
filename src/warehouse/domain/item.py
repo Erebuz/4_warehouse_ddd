@@ -11,6 +11,7 @@ class Item:
     height: float
     length: float
 
+
 class ItemFactory:
     @staticmethod
     def create(name: str, weight: float, width: float, height: float, length: float) -> Item:

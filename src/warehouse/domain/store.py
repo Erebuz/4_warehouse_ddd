@@ -2,9 +2,14 @@ import uuid
 from datetime import datetime
 from typing import Any, List
 
-from src.warehouse.domain.events import StorageCreated, StorageAccepted, StorageCompleted, StorageCancelled
+from src.warehouse.domain.events import (
+    StorageAccepted,
+    StorageCancelled,
+    StorageCompleted,
+    StorageCreated,
+)
 from src.warehouse.domain.item import Item
-from src.warehouse.domain.value_objects import ShelfId, StoringStatus, RackId
+from src.warehouse.domain.value_objects import RackId, ShelfId, StoringStatus
 
 
 class Storing:
@@ -14,6 +19,7 @@ class Storing:
         self.rack_id = rack_id
         self.shelf_id = shelf_id
         self.status = StoringStatus.CREATED
+
 
 class StoringFactory:
     @staticmethod
@@ -33,7 +39,7 @@ class StoringAggregate:
         return self._root
 
     @classmethod
-    def create(cls, storing_id: str, item: Item) -> StoringAggregate:
+    def create(cls, storing_id: str, item: Item) -> "StoringAggregate":
         root = Storing(storing_id, item)
         agg = cls(root)
         agg.events.append(StorageCreated(storing_id, datetime.now()))
@@ -55,7 +61,7 @@ class StoringAggregate:
         self._root.status = StoringStatus.COMPLETED
         self._root.shelf_id = None
         self._root.rack_id = None
-        self.events.append(StorageCompleted(self._root.id, self._root.shelf_id.value, datetime.now()))
+        self.events.append(StorageCompleted(self._root.id, datetime.now()))
 
     def cancelled(self) -> None:
         if self._root.status == StoringStatus.COMPLETED:

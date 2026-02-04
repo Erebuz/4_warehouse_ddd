@@ -1,18 +1,18 @@
-from typing import Optional, List
+from typing import List, Optional
 
-from src.warehouse.domain.repository import StoringRepository
+from src.warehouse.domain.repository import StoragesRepository
 from src.warehouse.domain.store import Storing
 
 
-class InMemoryReservationRepository(StoringRepository):
+class InMemoryStoragesRepository(StoragesRepository):
     def __init__(self) -> None:
         self._items: dict[str, Storing] = {}
 
-    def get(self, reservation_id: str) -> Optional[Storing]:
-        return self._items.get(reservation_id)
+    def get(self, storing_id: str) -> Optional[Storing]:
+        return self._items.get(storing_id)
 
-    def add(self, reservation: Storing) -> None:
-        self._items[reservation.id] = reservation
+    def add(self, storing: Storing) -> None:
+        self._items[storing.id] = storing
 
     def list_all_storing(self) -> List[Storing]:
         return [r for r in self._items.values()]
