@@ -3,10 +3,10 @@ from enum import Enum
 
 
 class StoringStatus(Enum):
-    ARRIVED = "arrived"
-    STORED = "stored"
-    PICKED_UP = "picked_up"
-    LOST = "lost"
+    CREATED = "created"
+    ACCEPTED = "accepted"
+    COMPLETED = "picked_up"
+    CANCELLED = "cancelled"
 
 
 @dataclass(frozen=True)
@@ -16,8 +16,7 @@ class RackId:
 
 @dataclass(frozen=True)
 class ShelfId:
-    rack_id: RackId
-    position: int
+    value: int
 
 
 @dataclass(frozen=True)
@@ -26,8 +25,3 @@ class ShelfArea:
     height: float
     length: float
     max_weight: float
-
-
-@dataclass(frozen=True)
-class UserId:
-    value: str

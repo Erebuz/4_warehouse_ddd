@@ -1,0 +1,9 @@
+from typing import Protocol, Optional, List
+
+from src.warehouse.domain.store import Storing
+
+
+class StoringRepository(Protocol):
+    def get(self, storing_id: str) -> Optional[Storing]: ...
+    def add(self, reservation: Storing) -> None: ...
+    def list_all_storing(self) -> List[Storing]: ...

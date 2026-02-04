@@ -1,7 +1,9 @@
-from typing import Dict, List
+from datetime import datetime
+from typing import Any, Dict, List
 
-from src.domain.item import Item
-from src.domain.value_objects import RackId, ShelfArea, ShelfId
+from src.warehouse.domain.events import RackCreated
+from src.warehouse.domain.item import Item
+from src.warehouse.domain.value_objects import RackId, ShelfArea, ShelfId
 
 
 class Shelf:
@@ -28,16 +30,25 @@ class Rack:
 
 class RackAggregate:
     def __init__(self, rack: Rack):
-        self.rack = rack
+        self._root = rack
+        self.events: List[Any] = []
+
+    @property
+    def root(self) -> Rack:
+        return self._root
+
+    @classmethod
+    def create(cls, rack_id: str, shelves: List[Shelf]) -> "RackAggregate":
+        root = Rack(rack_id=RackId(value=rack_id), shelves={s.id.value: s for s in shelves})
+        agg = cls(root)
+        agg.events.append(RackCreated(rack_id, datetime.now()))
+        return agg
 
     def get_shelf(self, shelf_id: ShelfId) -> Shelf:
-        if self.rack.id != shelf_id.rack_id:
-            raise ValueError("Shelf does not belong to this rack")
-
         try:
-            return self.rack.shelves[shelf_id.position]
+            return self._root.shelves[shelf_id.value]
         except ValueError:
-            raise ValueError("Shelf does not exist in this rack")
+            raise ValueError(f"Shelf {shelf_id} does not exist in this rack ${self._root.id}")
 
     def store_item_on_shelf(self, item: Item, shelf_id: ShelfId) -> None:
         shelf = self.get_shelf(shelf_id)
