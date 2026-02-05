@@ -50,3 +50,12 @@ class RackAggregate:
     def store_item_on_shelf(self, item: Item, shelf_id: ShelfId) -> None:
         shelf = self.get_shelf(shelf_id)
         shelf.items.append(item)
+
+    def remove_item_from_shelf(self, item: Item, shelf_id: ShelfId) -> None:
+        shelf = self.get_shelf(shelf_id)
+        try:
+            shelf.items.remove(item)
+        except ValueError:
+            raise ValueError(
+                f"Item {item} does not exist on shelf {shelf_id} in this rack ${self._root.id}"
+            )

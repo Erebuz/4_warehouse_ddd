@@ -3,11 +3,12 @@ from __future__ import annotations
 from types import TracebackType
 from typing import Protocol
 
-from src.warehouse.domain.repository import StoragesRepository
+from src.warehouse.domain.repository import StoragesRepository, RacksRepository
 
 
 class UnitOfWork(Protocol):
     storages: StoragesRepository
+    racks: RacksRepository
 
     def __enter__(self) -> UnitOfWork: ...
 
