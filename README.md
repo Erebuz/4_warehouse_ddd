@@ -8,13 +8,11 @@
 - `src/storing/infrastructure` — адаптеры (in-memory repo/uow), заготовки под SQLAlchemy.
 - `src/storing/entrypoints` — пример HTTP entrypoint (FastAPI-скелет без зависимости в pyproject).
 
-## Быстрый старт (тесты)
-```bash
-python -m venv .venv
-. .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -e ".[dev]"
-pytest
-```
+
+## Команды
+make test - тестирование кода
+make lint - запуск линтеров
+
 
 ## Доменные термины (Ubiquitous Language)
 - Item - предмет (пакет, коробка) для хранения
