@@ -5,7 +5,7 @@ from types import TracebackType
 from src.warehouse.application.unit_of_work import UnitOfWork
 from src.warehouse.infrastructure.repositories import (
     InMemoryRacksRepository,
-    InMemoryStoragesRepository,
+    InMemoryStoragesRepository, RedisStoragesRepository, RedisRacksRepository,
 )
 
 
@@ -36,23 +36,25 @@ class InMemoryUnitOfWork(UnitOfWork):
         self.committed = False
 
 
-# # Заготовка под SQLAlchemy UoW (для лекции / дальнейшего расширения)
-# class SqlAlchemyUnitOfWork(UnitOfWork):
-#     def __init__(self, session_factory):
-#         self._session_factory = session_factory
-#         self.session = None
-#         self.reservations = None
-#
-#     def __enter__(self):
-#         self.session = self._session_factory()
-#         # self.reservations = SqlAlchemyReservationRepository(self.session)
-#         raise NotImplementedError
-#
-#     def __exit__(self, exc_type, exc, tb):
-#         raise NotImplementedError
-#
-#     def commit(self) -> None:
-#         raise NotImplementedError
-#
-#     def rollback(self) -> None:
-#         raise NotImplementedError
+class RedisUnitOfWork(UnitOfWork):
+    def __init__(self, session_factory):
+        self._session_factory = session_factory
+        self.session = None
+
+        self.storages = RedisStoragesRepository()
+        self.racks = RedisRacksRepository()
+        self.committed = False
+
+    def __enter__(self):
+        self.session = self._session_factory()
+        # self.reservations = SqlAlchemyReservationRepository(self.session)
+        raise NotImplementedError
+
+    def __exit__(self, exc_type, exc, tb):
+        raise NotImplementedError
+
+    def commit(self) -> None:
+        raise NotImplementedError
+
+    def rollback(self) -> None:
+        raise NotImplementedError
