@@ -5,7 +5,7 @@ description = "Add your description here"
 requires-python = ">=3.14"
 dependencies = [
         "pyyaml>=6.0.3",
-     "redis>=7.1.0",
+        "redis>=7.1.0",
 ]
 
 [dependency-groups]
@@ -33,7 +33,7 @@ line-length = 88
 target-version = [
     'py312',
     'py313'
-]
+]y
 
 [tool.pytest.ini_options]
 minversion = "9.0"

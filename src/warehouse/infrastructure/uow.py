@@ -4,9 +4,8 @@ from types import TracebackType
 
 from src.warehouse.application.unit_of_work import UnitOfWork
 from src.warehouse.infrastructure.repositories import (
-    InMemoryRacksRepository,
-    InMemoryStoragesRepository, RedisStoragesRepository, RedisRacksRepository,
-)
+    InMemoryRacksRepository, InMemoryStoragesRepository, RedisRacksRepository,
+    RedisStoragesRepository)
 
 
 class InMemoryUnitOfWork(UnitOfWork):

@@ -1,7 +1,7 @@
 from typing import Iterable, List, Tuple
 
 from src.warehouse.domain.item import Item
-from src.warehouse.domain.rack import Rack, RackAggregate, Shelf
+from src.warehouse.domain.rack import RackAggregate
 from src.warehouse.domain.store import Storing
 from src.warehouse.domain.value_objects import ShelfArea, ShelfId
 

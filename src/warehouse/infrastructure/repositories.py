@@ -56,7 +56,6 @@ class InMemoryRacksRepository(RacksRepository):
         return [r for r in self._items.values()]
 
 
-
 class RedisStoragesRepository(StoragesRepository):
     _instance = None
 
@@ -85,13 +84,15 @@ class RedisStoragesRepository(StoragesRepository):
             )
 
     def get(self, storing_id: str) -> Optional[Storing]:
-        return self.r.get('storages:' + storing_id)
+        return self.r.get("storages:" + storing_id)
 
     def add(self, storing: Storing) -> None:
-        self.r.set('storages:' + storing.id, pickle.dumps(storing))
+        self.r.set("storages:" + storing.id, pickle.dumps(storing))
 
     def list_all_storing(self) -> List[Storing]:
-        return [pickle.loads(self.r.get(key)) for key in self.r.scan_iter(match='storages:')]
+        return [
+            pickle.loads(self.r.get(key)) for key in self.r.scan_iter(match="storages:")
+        ]
 
 
 class RedisRacksRepository(RacksRepository):
@@ -122,10 +123,12 @@ class RedisRacksRepository(RacksRepository):
             )
 
     def get(self, storing_id: str) -> Optional[Storing]:
-        return self.r.get('storages:' + storing_id)
+        return self.r.get("storages:" + storing_id)
 
     def add(self, rack: Rack) -> None:
-        self.r.set('storages:' + rack.id.value, pickle.dumps(rack))
+        self.r.set("storages:" + rack.id.value, pickle.dumps(rack))
 
     def list_all_storing(self) -> List[Storing]:
-        return [pickle.loads(self.r.get(key)) for key in self.r.scan_iter(match='storages:')]
+        return [
+            pickle.loads(self.r.get(key)) for key in self.r.scan_iter(match="storages:")
+        ]

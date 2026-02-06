@@ -2,12 +2,8 @@ import uuid
 from datetime import datetime
 from typing import Any, List
 
-from src.warehouse.domain.events import (
-    StorageAccepted,
-    StorageCancelled,
-    StorageCompleted,
-    StorageCreated,
-)
+from src.warehouse.domain.events import (StorageAccepted, StorageCancelled,
+                                         StorageCompleted)
 from src.warehouse.domain.item import Item
 from src.warehouse.domain.value_objects import RackId, ShelfId, StoringStatus
 

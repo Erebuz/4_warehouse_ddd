@@ -3,16 +3,12 @@ from contextlib import nullcontext as does_not_raise
 import pytest
 from _pytest.raises import RaisesExc
 
-from src.warehouse.application.commands import (
-    CancelItemStoring,
-    CreateItemStoring,
-    PickUpItemStoring,
-)
-from src.warehouse.application.handlers import (
-    CancelStoringHandler,
-    CreateStoringHandler,
-    PickUpStoringHandler,
-)
+from src.warehouse.application.commands import (CancelItemStoring,
+                                                CreateItemStoring,
+                                                PickUpItemStoring)
+from src.warehouse.application.handlers import (CancelStoringHandler,
+                                                CreateStoringHandler,
+                                                PickUpStoringHandler)
 from src.warehouse.domain.rack import RackAggregate, Shelf
 from src.warehouse.domain.services import ShelfAllocationService
 from src.warehouse.domain.value_objects import ShelfArea, ShelfId

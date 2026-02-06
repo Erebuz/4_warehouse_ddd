@@ -1,4 +1,6 @@
-from src.warehouse.application.commands import CreateItemStoring, PickUpItemStoring, CancelItemStoring
+from src.warehouse.application.commands import (CancelItemStoring,
+                                                CreateItemStoring,
+                                                PickUpItemStoring)
 from src.warehouse.application.unit_of_work import UnitOfWork
 from src.warehouse.domain.item import ItemFactory
 from src.warehouse.domain.rack import RackAggregate
@@ -13,7 +15,9 @@ class BaseHandler:
 
 
 class CreateStoringHandler(BaseHandler):
-    def __call__(self, cmd: CreateItemStoring, racks: list[RackAggregate]) -> StoringAggregate:
+    def __call__(
+        self, cmd: CreateItemStoring, racks: list[RackAggregate]
+    ) -> StoringAggregate:
         item = ItemFactory.create(
             cmd.name, cmd.weight, cmd.width, cmd.height, cmd.length
         )
