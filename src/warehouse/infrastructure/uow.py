@@ -3,7 +3,10 @@ from __future__ import annotations
 from types import TracebackType
 
 from src.warehouse.application.unit_of_work import UnitOfWork
-from src.warehouse.infrastructure.repositories import InMemoryStoragesRepository
+from src.warehouse.infrastructure.repositories import (
+    InMemoryRacksRepository,
+    InMemoryStoragesRepository,
+)
 
 
 class InMemoryUnitOfWork(UnitOfWork):
@@ -11,6 +14,7 @@ class InMemoryUnitOfWork(UnitOfWork):
 
     def __init__(self) -> None:
         self.storages = InMemoryStoragesRepository()
+        self.racks = InMemoryRacksRepository()
         self.committed = False
 
     def __enter__(self) -> InMemoryUnitOfWork:

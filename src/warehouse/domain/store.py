@@ -25,7 +25,7 @@ class Storing:
         self.item = item
         self.rack_id = rack_id
         self.shelf_id = shelf_id
-        self.status = StoringStatus.CREATED
+        self.status = status
 
 
 class StoringFactory:
@@ -44,13 +44,6 @@ class StoringAggregate:
     @property
     def root(self) -> Storing:
         return self._root
-
-    @classmethod
-    def create(cls, storing_id: str, item: Item) -> "StoringAggregate":
-        root = Storing(storing_id, item)
-        agg = cls(root)
-        agg.events.append(StorageCreated(storing_id, datetime.now()))
-        return agg
 
     def assign_shelf(self, rack_id: RackId, shelf_id: ShelfId) -> None:
         if self._root.status != StoringStatus.CREATED:

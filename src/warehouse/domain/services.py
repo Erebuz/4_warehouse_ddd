@@ -1,9 +1,9 @@
 from typing import Iterable, List, Tuple
 
 from src.warehouse.domain.item import Item
-from src.warehouse.domain.rack import RackAggregate
+from src.warehouse.domain.rack import Rack, RackAggregate, Shelf
 from src.warehouse.domain.store import Storing
-from src.warehouse.domain.value_objects import RackId, ShelfArea, ShelfId
+from src.warehouse.domain.value_objects import ShelfArea, ShelfId
 
 
 class ShelfAllocationService:
@@ -37,7 +37,7 @@ class ShelfAllocationService:
 
     def allocate(
         self, storing: Storing, racks: Iterable[RackAggregate]
-    ) -> Tuple[RackId, ShelfId] | None:
+    ) -> Tuple[RackAggregate, ShelfId] | None:
         """
         Поиск подходящей полки для хранения
         """
@@ -47,6 +47,6 @@ class ShelfAllocationService:
                 is_suitable = self.can_fit_item(storing.item, shelf.items, shelf.area)
 
                 if is_suitable:
-                    return rack.root.id, shelf.id
+                    return rack, shelf.id
 
         return None

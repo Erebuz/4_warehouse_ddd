@@ -3,7 +3,7 @@ from __future__ import annotations
 from types import TracebackType
 from typing import Protocol
 
-from src.warehouse.domain.repository import StoragesRepository, RacksRepository
+from src.warehouse.domain.repository import RacksRepository, StoragesRepository
 
 
 class UnitOfWork(Protocol):
